@@ -10,7 +10,7 @@ endif
 
 NODE_PREFIX=$(shell pwd)
 
-PHPUNIT="$(PWD)/lib/composer/phpunit/phpunit/phpunit"
+PHPUNIT="$(CURDIR)/../../lib/composer/phpunit/phpunit/phpunit"
 BOWER=$(NODE_PREFIX)/node_modules/bower/bin/bower
 JSDOC=$(NODE_PREFIX)/node_modules/.bin/jsdoc
 
@@ -129,8 +129,6 @@ endif
 ifneq (,$(wildcard $(CURDIR)/package.json))
 	$(npm) run test
 endif
-	mkdir -p $(build_tools_directory)
-	curl -sSL https://phar.phpunit.de/phpunit-5.7.phar -o $(build_tools_directory)/phpunit.phar
-	php $(build_tools_directory)/phpunit.phar -c phpunit.xml --coverage-clover ./clover.xml
-	php $(build_tools_directory)/phpunit.phar -c phpunit.integration.xml
+	php $(PHPUNIT) -c phpunit.xml --coverage-clover ./clover.xml
+	php $(PHPUNIT) -c phpunit.integration.xml
 
